@@ -24,7 +24,7 @@ This bundle permits you to create, modify and read word objects.
     );
 ```
 
-## TL;DR
+## Get started
 
 - Create an empty object:
 
