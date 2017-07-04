@@ -3,40 +3,34 @@
 namespace GGGGino\WordBundle;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Writer\WriterInterface;
+
 
 /**
- * Factory for PHPExcel objects, StreamedResponse, and PHPExcel_Writer_IWriter.
+ * Factory for PhpWord objects, StreamedResponse, and PHPExcel_Writer_IWriter.
  *
  * @package GGGGino\WordBundle
  */
 class Factory
 {
-    private $phpExcelIO;
+    private $phpWordIO;
 
-    public function __construct($phpExcelIO = '\PHPExcel_IOFactory')
+    public function __construct($phpWordIO = '\PhpOffice\PhpWord\IOFactory')
     {
-        $this->phpExcelIO = $phpExcelIO;
+        $this->phpWordIO = $phpWordIO;
     }
 
     /**
-     * Creates an empty PHPExcel Object if the filename is empty, otherwise loads the file into the object.
+     * Creates an empty PhpWord Object if the filename is empty, otherwise loads the file into the object.
      *
      * @param string $filename
      *
-     * @return \PHPExcel
+     * @return \PhpWord
      */
-    public function createPHPExcelObject($filename = null)
+    public function createPHPWordObject($filename = null)
     {
-        return (null === $filename) ? new \PHPExcel() : call_user_func(array($this->phpExcelIO, 'load'), $filename);
-    }
-
-    /**
-     * Create a worksheet drawing
-     * @return \PHPExcel_Worksheet_Drawing
-     */
-    public function createPHPExcelWorksheetDrawing()
-    {
-        return new \PHPExcel_Worksheet_Drawing();
+        return (null === $filename) ? new PhpWord() : call_user_func(array($this->phpWordIO, 'load'), $filename);
     }
 
     /**
@@ -47,36 +41,36 @@ class Factory
      *
      * @return \PHPExcel_Reader_IReader
      */
-    public function createReader($type = 'Excel5')
+    public function createReader($type = 'Word2007')
     {
-        return call_user_func(array($this->phpExcelIO, 'createReader'), $type);
+        return call_user_func(array($this->phpWordIO, 'createReader'), $type);
     }
 
     /**
      * Create a writer given the PHPExcelObject and the type,
      *   the type could be one of PHPExcel_IOFactory::$_autoResolveClasses
      *
-     * @param \PHPExcel $phpExcelObject
+     * @param \PhpWord $phpWordObject
      * @param string $type
      *
      *
-     * @return \PHPExcel_Writer_IWriter
+     * @return WriterInterface
      */
-    public function createWriter(\PHPExcel $phpExcelObject, $type = 'Excel5')
+    public function createWriter(\PHPExcel $phpWordObject, $type = 'Word2007')
     {
-        return call_user_func(array($this->phpExcelIO, 'createWriter'), $phpExcelObject, $type);
+        return call_user_func(array($this->phpWordIO, 'createWriter'), $phpWordObject, $type);
     }
 
     /**
      * Stream the file as Response.
      *
-     * @param \PHPExcel_Writer_IWriter $writer
+     * @param WriterInterface $writer
      * @param int                      $status
      * @param array                    $headers
      *
      * @return StreamedResponse
      */
-    public function createStreamedResponse(\PHPExcel_Writer_IWriter $writer, $status = 200, $headers = array())
+    public function createStreamedResponse(WriterInterface $writer, $status = 200, $headers = array())
     {
         return new StreamedResponse(
             function () use ($writer) {
@@ -91,6 +85,7 @@ class Factory
      * Create a PHPExcel Helper HTML Object
      *
      * @return \PHPExcel_Helper_HTML
+     * @deprecated
      */
     public function createHelperHTML()
     {

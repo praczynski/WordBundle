@@ -1,6 +1,6 @@
 parameters:
-    phpexcel.class:  GGGGino\WordBundle\Factory
+    phpword.class:  GGGGino\WordBundle\Factory
 
 services:
-    phpexcel:
-      class: '%phpexcel.class%'
+    phpword:
+      class: '%phpword.class%'
