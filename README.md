@@ -86,15 +86,15 @@ class DefaultController extends Controller
     public function indexAction($name)
     {
         // ask the service for a Excel5
-       $phpWordObject = $this->get('phpword')->createPHPWordObject();
+        $phpWordObject = $this->get('phpword')->createPHPWordObject();
 
-       $phpWordObject->getProperties()->setCreator("ggggino")
-           ->setLastModifiedBy("David Ginanni")
-           ->setTitle("Office Document")
-           ->setSubject("Office Document")
-           ->setDescription("Test document for Office, generated using PHP classes.")
-           ->setKeywords("office openxml php")
-           ->setCategory("Test result file");
+        $section = $phpWordObject->addSection();
+        // Adding Text element to the Section having font styled by default...
+        $section->addText(
+            '"Learn from yesterday, live for today, hope for tomorrow. '
+                . 'The important thing is not to stop questioning." '
+                . '(Albert Einstein)'
+        );
 
         // create the writer
         $writer = $this->get('phpword')->createWriter($phpWordObject, 'Word2007');
