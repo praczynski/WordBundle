@@ -52,7 +52,7 @@ class FakeControllerTest extends WebTestCase
 
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringEndsWith('.xls', $content);
+        $this->assertStringEndsWith('.doc', $content);
 
         $this->assertFileExists($content, sprintf('file %s should exist', $content));
     }
@@ -67,7 +67,7 @@ class FakeControllerTest extends WebTestCase
 
         $content = $client->getResponse()->getContent();
 
-        $this->assertStringEndsWith('.xls', $content);
+        $this->assertStringEndsWith('.doc', $content);
 
         $this->assertFileExists($content, sprintf('file %s should exist', $content));
     }

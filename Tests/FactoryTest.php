@@ -3,43 +3,38 @@
 namespace GGGGino\WordBundle\Tests;
 
 use GGGGino\WordBundle\Factory;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Writer\WriterInterface;
+use PhpOffice\PhpWord\Reader\ReaderInterface;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreate()
     {
         $factory =  new Factory();
-        $this->assertInstanceOf('\PHPExcel', $factory->createPHPExcelObject());
+        $this->assertInstanceOf(PhpWord::class, $factory->createPHPWordObject());
     }
 
     public function testCreateReader()
     {
         $factory =  new Factory();
-        $this->assertInstanceOf('\PHPExcel_Reader_IReader', $factory->createReader());
+        $this->assertInstanceOf(ReaderInterface::class, $factory->createReader());
     }
 
     public function testCreateWriter()
     {
         $factory =  new Factory();
-        $this->assertInstanceOf('\PHPExcel_Writer_IWriter', $factory->createWriter($factory->createPHPExcelObject()));
+        $this->assertInstanceOf(WriterInterface::class, $factory->createWriter($factory->createPHPWordObject()));
     }
 
     public function testCreateStreamedResponse()
     {
-        $writer = $this->getMock('\PHPExcel_Writer_IWriter');
+        $writer = $this->getMock(WriterInterface::class);
         $writer->expects($this->once())
             ->method('save')
             ->with('php://output');
 
         $factory =  new Factory();
         $factory->createStreamedResponse($writer)->sendContent();
-    }
-
-    public function testCreateHelperHtml()
-    {
-        $factory =  new Factory();
-        $helperHtml = $factory->createHelperHTML();
-        
-        $this->assertInstanceOf('\PHPExcel_Helper_HTML', $helperHtml);
     }
 }

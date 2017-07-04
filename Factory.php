@@ -5,10 +5,11 @@ namespace GGGGino\WordBundle;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\WriterInterface;
+use PhpOffice\PhpWord\Reader\ReaderInterface;
 
 
 /**
- * Factory for PhpWord objects, StreamedResponse, and PHPExcel_Writer_IWriter.
+ * Factory for PhpWord objects, StreamedResponse, and WriterInterface.
  *
  * @package GGGGino\WordBundle
  */
@@ -39,7 +40,7 @@ class Factory
      * @param string $type
      *
      *
-     * @return \PHPExcel_Reader_IReader
+     * @return \ReaderInterface
      */
     public function createReader($type = 'Word2007')
     {
@@ -56,7 +57,7 @@ class Factory
      *
      * @return WriterInterface
      */
-    public function createWriter(\PHPExcel $phpWordObject, $type = 'Word2007')
+    public function createWriter(PhpWord $phpWordObject, $type = 'Word2007')
     {
         return call_user_func(array($this->phpWordIO, 'createWriter'), $phpWordObject, $type);
     }

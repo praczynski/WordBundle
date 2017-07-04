@@ -9,4 +9,4 @@ framework:
         collect: false
 
 parameters:
-    xls_fixture_absolute_path: "%kernel.root_dir%/fixture/file.xls"
+    xls_fixture_absolute_path: "%kernel.root_dir%/fixture/file.doc"
