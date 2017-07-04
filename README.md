@@ -9,13 +9,20 @@ This bundle permits you to create, modify and read word objects.
 
 ## Installation
 
-**1**  Add to composer.json to the `require` key
+**1**  Add this to your composer.json
+
+``` yaml
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+``` 
+
+**2**  Add to composer.json to the `require` key
 
 ``` shell
     $composer require ggggino/wordbundle
 ``` 
 
-**2** Register the bundle in ``app/AppKernel.php``
+**3** Register the bundle in ``app/AppKernel.php``
 
 ``` php
     $bundles = array(

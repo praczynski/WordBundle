@@ -6,10 +6,6 @@ fake_route_store:
     path:      /fake/store
     defaults:  { _controller: GGGGinoWordBundle:Fake:store }
 
-fake_route_reader:
-    path:      /fake/reader
-    defaults:  { _controller: GGGGinoWordBundle:Fake:reader }
-
 fake_route_read:
     path:      /fake/read
     defaults:  { _controller: GGGGinoWordBundle:Fake:readAndSave }
