@@ -7,7 +7,7 @@ use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\WriterInterface;
 use PhpOffice\PhpWord\Reader\ReaderInterface;
 use PhpOffice\PhpWord\TemplateProcessor;
-
+use PhpOffice\PhpWord\IOFactory;
 
 /**
  * Factory for PhpWord objects, StreamedResponse, and WriterInterface.
@@ -50,7 +50,7 @@ class Factory
     /**
      * From the template load the 
      *
-     * @param TemplateProcessor $filename
+     * @param TemplateProcessor $templateobj
      *
      * @return PhpWord
      */
@@ -71,7 +71,7 @@ class Factory
      * @param string $type
      *
      *
-     * @return \ReaderInterface
+     * @return ReaderInterface
      */
     public function createReader($type = 'Word2007')
     {
