@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\WriterInterface;
 use PhpOffice\PhpWord\Reader\ReaderInterface;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 
 /**
@@ -27,11 +28,41 @@ class Factory
      *
      * @param string $filename
      *
-     * @return \PhpWord
+     * @return PhpWord
      */
     public function createPHPWordObject($filename = null)
     {
         return (null === $filename) ? new PhpWord() : call_user_func(array($this->phpWordIO, 'load'), $filename);
+    }
+
+    /**
+     * Load a file as template
+     *
+     * @param string $filename
+     *
+     * @return TemplateProcessor
+     */
+    public function createTemplateObject($filename = null)
+    {
+        return new TemplateProcessor($filename);
+    }
+
+    /**
+     * From the template load the 
+     *
+     * @param TemplateProcessor $filename
+     *
+     * @return PhpWord
+     */
+    public function getPhpWordObjFromTemplate($templateobj)
+    {
+        $fileName = $templateobj->save();
+
+        $phpWordObject = IOFactory::load($fileName);
+
+        unlink($fileName);
+
+        return $phpWordObject;
     }
 
     /**
@@ -51,7 +82,7 @@ class Factory
      * Create a writer given the PHPExcelObject and the type,
      *   the type could be one of PHPExcel_IOFactory::$_autoResolveClasses
      *
-     * @param \PhpWord $phpWordObject
+     * @param PhpWord $phpWordObject
      * @param string $type
      *
      *

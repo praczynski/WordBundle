@@ -79,7 +79,7 @@ The best place to start is the fake Controller at `Tests/app/Controller/FakeCont
 
 You could find a lot of examples in the official PHPWord repository https://github.com/PHPOffice/PHPWord/tree/develop/samples
 
-### For lazy devs
+### Create a new doc
 
 ``` php
 namespace YOURNAME\YOURBUNDLE\Controller;
@@ -92,10 +92,12 @@ class DefaultController extends Controller
 
     public function indexAction($name)
     {
-        // ask the service for a Excel5
+        // ask the service for a Word2007
         $phpWordObject = $this->get('phpword')->createPHPWordObject();
 
+        // Create a new Page
         $section = $phpWordObject->addSection();
+
         // Adding Text element to the Section having font styled by default...
         $section->addText(
             '"Learn from yesterday, live for today, hope for tomorrow. '
@@ -122,9 +124,55 @@ class DefaultController extends Controller
 }
 ```
 
+### Edit a doc
+
+In the template file(docx) variable should be declared as ${var1}, so in the template you can change "var1" value in this way:
+```php
+$phpTemplateObject->setValue('test', 'testValue');
+```
+Complete example
+
+``` php
+namespace YOURNAME\YOURBUNDLE\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+class DefaultController extends Controller
+{
+
+    public function indexAction($name)
+    {
+      $fileName = ".../../test.docx";
+    
+        // ask the service for a Word2007
+        $phpTemplateObject = $this->get('phpword')->createTemplateObject($fileName);
+
+    $phpTemplateObject->setValue('test', 'testValue');
+        
+        $phpWordObject = $this->get('phpword')->getPhpWordObjFromTemplate($phpTemplateObject);
+
+        // create the writer
+        $writer = $this->get('phpword')->createWriter($phpWordObject, 'Word2007');
+        // create the response
+        $response = $this->get('phpword')->createStreamedResponse($writer);
+        // adding headers
+        $dispositionHeader = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'stream-file.docx'
+        );
+        $response->headers->set('Content-Type', 'application/msword');
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+        $response->headers->set('Content-Disposition', $dispositionHeader);
+
+        return $response;        
+    }
+}
+```
+
 ## Contribute
 
 1. fork the project
 2. clone the repo
-3. get the coding standard fixer: `wget http://cs.sensiolabs.org/get/php-cs-fixer.phar`
-4. before the PullRequest you should run the coding standard fixer with `php php-cs-fixer.phar fix -v .`
+3. submit a PullRequest
