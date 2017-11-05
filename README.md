@@ -128,7 +128,7 @@ class DefaultController extends Controller
 
 In the template file(docx) variable should be declared as ${var1}, so in the template you can change "var1" value in this way:
 ```php
-$phpTemplateObject->setValue('test', 'testValue');
+$phpTemplateObject->setValue('var1', 'testValue');
 ```
 Complete example
 
@@ -148,7 +148,7 @@ class DefaultController extends Controller
         // ask the service for a Word2007
         $phpTemplateObject = $this->get('phpword')->createTemplateObject($fileName);
 
-    $phpTemplateObject->setValue('test', 'testValue');
+        $phpTemplateObject->setValue('test', 'testValue');
         
         $phpWordObject = $this->get('phpword')->getPhpWordObjFromTemplate($phpTemplateObject);
 
