@@ -1,7 +1,11 @@
 Symfony2 Word bundle
 ============
 
-This bundle permits you to create, modify and read word objects.
+This bundle is a wrapper of the library [PHPOffice/PHPWord](https://github.com/PHPOffice/PHPWord).
+
+For the complete reference look at the PHPWord Docs.
+[PHPWord Docs](https://github.com/PHPOffice/PHPWord)
+
 
 ## License
 
@@ -9,20 +13,13 @@ This bundle permits you to create, modify and read word objects.
 
 ## Installation
 
-**1**  Add this to your composer.json
-
-``` yaml
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-``` 
-
-**2**  Add to composer.json to the `require` key
+**1**  Add to composer.json to the `require` key
 
 ``` shell
     $composer require ggggino/wordbundle
 ``` 
 
-**3** Register the bundle in ``app/AppKernel.php``
+**2** Register the bundle in ``app/AppKernel.php``
 
 ``` php
     $bundles = array(
@@ -37,12 +34,6 @@ This bundle permits you to create, modify and read word objects.
 
 ``` php
 $phpWordObject = $this->get('phpword')->createPHPWordObject();
-```
-
-- Create an object from a file:
-
-``` php
-$phpWordObject = $this->get('phpword')->createPHPWordObject('file.docx');
 ```
 
 - Create a Word and write to a file given the object:
@@ -70,12 +61,6 @@ The list of the types are:
 5.  'RTF'
 
 ## Example
-
-### Fake Controller
-
-The best place to start is the fake Controller at `Tests/app/Controller/FakeController.php`, that is a working example.
-
-### More example
 
 You could find a lot of examples in the official PHPWord repository https://github.com/PHPOffice/PHPWord/tree/develop/samples
 
