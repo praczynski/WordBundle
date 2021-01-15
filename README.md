@@ -1,5 +1,5 @@
 Symfony2 Word bundle
-============
+=============
 
 This bundle is a wrapper of the library [PHPOffice/PHPWord](https://github.com/PHPOffice/PHPWord).
 
